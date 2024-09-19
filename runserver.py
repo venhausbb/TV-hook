@@ -1,14 +1,17 @@
-"""
-This script runs the Flask_TV_hook application using a development server.
-"""
+import os
+from flask import Flask
 
-from os import environ
-from Flask_TV_hook import app
+# Initialize Flask app
+app = Flask(__name__)
 
-if __name__ == '__main__':
-    HOST = environ.get('SERVER_HOST', 'localhost')
-    try:
-        PORT = int(environ.get('SERVER_PORT', '5555'))
-    except ValueError:
-        PORT = 5555
-    app.run(HOST, PORT)
+# Define a route for the home page
+@app.route('/')
+def home():
+    return "Flask app running!"
+
+# Start the server using the port provided by Render
+if __name__ == "__main__":
+    # Get the PORT environment variable (Render assigns this dynamically)
+    port = int(os.environ.get("PORT", 5000))
+    # Run the app on 0.0.0.0 so it's accessible externally
+    app.run(host='0.0.0.0', port=port)
